@@ -33,6 +33,7 @@
 /* Imagen del menú lateral */
 .menu-picture {
 	background: url('../img/barra_lateral.jpg');
+	/* background-repeat: no-repeat!important; */
 }
 .page-sidebar .page-sidebar-wrapper > ul > li.active > a, .page-sidebar .page-sidebar-wrapper > ul > li > a{
 	color: #808285 !important;

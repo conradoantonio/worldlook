@@ -151,70 +151,70 @@
                 <!-- END SELECTED LINK -->
 
                 <!-- BEGIN SINGLE LINK -->
-                <li class="{{$menu == 'Servicios' ? 'active' : ''}}">
+                {{-- <li class="{{$menu == 'Servicios' ? 'active' : ''}}">
                     <a href="{{url('pedidos')}}">
                         <i class="fa fa-cubes" aria-hidden="true"></i>
                         <span class="title">Servicios</span>
                     </a>
-                </li>
+                </li>--}}
                 <!-- END SINGLE LINK -->
 
                 <!-- BEGIN SINGLE LINK -->
-                <li class="{{$menu == 'Estilistas' ? 'active' : ''}}">
+                {{-- <li class="{{$menu == 'Estilistas' ? 'active' : ''}}">
                     <a href="{{url('estilistas')}}">
                         <i class="fa fa-male" aria-hidden="true"></i>
                         <span class="title">Estilistas</span>
                     </a>
-                </li>
+                </li> --}}
                 <!-- END SINGLE LINK -->
     
                 <!-- BEGIN SINGLE LINK -->
-                <li class="{{$menu == 'Productos' ? 'active' : ''}}">
+                {{-- <li class="{{$menu == 'Productos' ? 'active' : ''}}">
                     <a href="{{url('productos')}}">
                         <i class="fa fa-suitcase" aria-hidden="true"></i>
                         <span class="title">Productos</span>
                     </a>
-                </li>
+                </li> --}}
                 <!-- END SINGLE LINK -->
 
                 <!-- BEGIN SINGLE LINK -->
-                <li class="{{$menu == 'Imágenes' ? 'active' : ''}}">
-                    <a href="<?php echo url();?>/cargar_imagenes">
+                {{-- <li class="{{$menu == 'Imágenes' ? 'active' : ''}}">
+                    <a href="{{url('cargar_imagenes')}}">
                         <i class="fa fa-upload" aria-hidden="true"></i>
                         <span class="title">Cargar imágenes</span>
                     </a>
-                </li>
+                </li> --}}
                 <!-- END SINGLE LINK -->
 
                 <!-- BEGIN SINGLE LINK -->
-                <li class="{{$menu == 'Menu app' ? 'active' : ''}}">
-                    <a href="<?php echo url();?>/menu_app">
+                {{-- <li class="{{$menu == 'Menu app' ? 'active' : ''}}">
+                    <a href="{{url('menu_app')}}">
                         <i class="fa fa-bars" aria-hidden="true"></i>
                         <span class="title">Menu app</span>
                     </a>
-                </li>
+                </li> --}}
                 <!-- END SINGLE LINK -->
 
                 <!-- BEGIN SINGLE LINK -->
-                <li class="{{$menu == 'Subcategorías app' ? 'active' : ''}}">
-                    <a href="<?php echo url();?>/subcategorias_app">
+                {{-- <li class="{{$menu == 'Subcategorías app' ? 'active' : ''}}">
+                    <a href="{{url('subcategorias_app')}}">
                         <i class="fa fa-th-list" aria-hidden="true"></i>
                         <span class="title">Subcategorías</span>
                     </a>
-                </li>
+                </li> --}}
                 <!-- END SINGLE LINK -->
 
                 <!-- BEGIN SINGLE LINK -->
-                <li class="{{$menu == 'Modificar categorías' ? 'active' : ''}}">
-                    <a href="<?php echo url();?>/configurarcion_servicios">
+                {{-- <li class="{{$menu == 'Modificar categorías' ? 'active' : ''}}">
+                    <a href="{{url('configurarcion_servicios')}}">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                         <span class="title">Modificar categorías</span>
                     </a>
-                </li>
+                </li> --}}
                 <!-- END SINGLE LINK -->
 
                 <!-- BEGIN ONE LEVEL MENU -->
-                <li class="{{$menu == 'Cupones' ? 'open start' : ''}}">
+                {{-- <li class="{{$menu == 'Cupones' ? 'open start' : ''}}">
                     <a href="javascript:;">
                         <i class="fa fa-ticket" aria-hidden="true"></i>
                         <span class="title">Cupones</span>
@@ -224,7 +224,7 @@
                         <li class="{{$title == 'Cupones Generales' ? 'active' : ''}}"><a href="{{url('cupones/generales')}}">Cupones generales</a></li> 
                         <li class="{{$title == 'Cupones Individuales' ? 'active' : ''}}"><a href="{{url('cupones/individuales')}}">Cupones individuales</a></li>
                     </ul>
-                </li>
+                </li> --}}
                 <!-- END ONE LEVEL MENU -->
 
                 <!-- BEGIN SINGLE LINK -->
@@ -237,12 +237,12 @@
                 <!-- END SINGLE LINK -->
 
                 <!-- BEGIN SINGLE LINK -->
-                <li class="{{$menu == 'Galería' ? 'active' : ''}}">
-                    <a href="<?php echo url();?>/galeria">
+                {{-- <li class="{{$menu == 'Galería' ? 'active' : ''}}">
+                    <a href="{{url('galeria')}}">
                         <i class="fa fa-camera-retro" aria-hidden="true"></i>
                         <span class="title">Galería</span>
                     </a>
-                </li>
+                </li> --}}
                 <!-- END SINGLE LINK -->
                 
                 <!-- BEGIN ONE LEVEL MENU -->
@@ -253,23 +253,23 @@
                         <span class="{{$menu == 'Usuarios' ? 'arrow open' : 'arrow'}}"></span>
                     </a>
                     <ul class="sub-menu" style="{{$menu == 'Usuarios' ? 'display: block;' : ''}}">
-                        <li class="{{$title == 'Usuarios Sistema' ? 'active' : ''}}"><a href="<?php echo url();?>/usuarios/sistema">Usuarios (sistema)</a></li> 
-                        <li class="{{$title == 'Usuarios App' ? 'active' : ''}}"><a href="<?php echo url();?>/usuarios/app">Usuarios (app)</a></li>
+                        <li class="{{$title == 'Usuarios Sistema' ? 'active' : ''}}"><a href="{{url('/usuarios/sistema')}}">Usuarios (sistema)</a></li> 
+                        <li class="{{$title == 'Usuarios App' ? 'active' : ''}}"><a href="{{url('/usuarios/app')}}">Usuarios (app)</a></li> 
                     </ul>
                 </li>
                 <!-- END ONE LEVEL MENU -->
                 
                 <!-- BEGIN SELECTED LINK -->
-                <li class="{{$menu == 'Configuraciones' ? 'active' : ''}}">
+                {{-- <li class="{{$menu == 'Configuraciones' ? 'active' : ''}}">
                     <a href="javascript:;">
                         <i class="fa fa-cogs" aria-hidden="true"></i>
                         <span class="title">Configuraciones</span>
                         <span class="{{$menu == 'Configuraciones' ? 'arrow open' : 'arrow'}}"></span>
                     </a>
                     <ul class="sub-menu" style="{{$menu == 'Configuraciones' ? 'display: block;' : ''}}">
-                        <li class="{{$title == 'Preguntas frecuentes' ? 'active' : ''}}"><a href="<?php echo url();?>/configuracion/preguntas_frecuentes">Preguntas frecuentes</a></li>
+                        <li class="{{$title == 'Preguntas frecuentes' ? 'active' : ''}}"><a href="{{url('configuracion/preguntas_frecuentes')}}">Preguntas frecuentes</a></li>
                     </ul>
-                </li>
+                </li> --}}
                 <!-- END SELECTED LINK -->
 
                 <!-- BEGIN SINGLE LINK -->
@@ -305,14 +305,14 @@
                 <div class="modal-content">
                     <div class="modal-header text-center">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="titulo-form-cambiar-contra-main">Cambio de contraseña para usuario {{Auth::user()->user}}</h4>
+                        <h4 class="modal-title" id="titulo-form-cambiar-contra-main">Cambio de contraseña para usuario {{auth()->user()->user}}</h4>
                     </div>
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-sm-12 col-xs-12 hidden">
                                 <div class="form-group">
                                     <label for="id">ID</label>
-                                    <input type="text" id="id" value="{{Auth::user()->id}}">
+                                    <input type="text" id="id" value="{{auth()->user()->id}}">
                                 </div>
                             </div>
                             <div class="col-sm-12 col-xs-12">
@@ -348,16 +348,16 @@
                 <div class="modal-content">
                     <div class="modal-header text-center">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="titulo-form-cambiar-contra-main">Cambio de foto de perfil para {{Auth::user()->user}}</h4>
+                        <h4 class="modal-title" id="titulo-form-cambiar-contra-main">Cambio de foto de perfil para {{auth()->user()->user}}</h4>
                     </div>
                     <form id="cargar_foto_usuario" action="<?php echo url();?>/usuarios/sistema/guardar_foto_usuario_sistema" enctype="multipart/form-data" method="POST">
                         <div class="modal-body">
-                            <input type="hidden" id="token" name="_token" empresa-id="{{Auth::user()->empresa_id}}" base-url="<?php echo url();?>" value="{{csrf_token()}}">
+                            <input type="hidden" id="token" name="_token" empresa-id="{{auth()->user()->empresa_id}}" base-url="<?php echo url();?>" value="{{csrf_token()}}">
                             <div class="row">
                                 <div class="col-sm-12 col-xs-12 hidden">
                                     <div class="form-group">
                                         <label for="id">ID</label>
-                                        <input type="text" id="id" name="id" value="{{Auth::user()->id}}">
+                                        <input type="text" id="id" name="id" value="{{auth()->user()->id}}">
                                     </div>
                                 </div>
                             </div>
@@ -381,7 +381,6 @@
     
 
         <script src="{{ asset('js/jquery.js') }}"></script>
-        <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> --> 
         <script src="{{ asset('js/sweetalert.min.js') }}"></script>
         <script src="{{ asset('js/lightbox.js') }}"></script>
 
@@ -425,152 +424,152 @@
     <script type="text/javascript">
         var baseUrl = "{{url('')}}";
         window.b_url = "{{url('')}}";
-    $('#change-pass, #cambiar_foto_usuario_sistema').on('hidden.bs.modal', function (e) {
-        $('#change-pass div.form-group').removeClass('has-error');
-        $('input.form-control').val('');
-        $('input#foto_usuario_sistema').val('');
-    });
+        $('#change-pass, #cambiar_foto_usuario_sistema').on('hidden.bs.modal', function (e) {
+            $('#change-pass div.form-group').removeClass('has-error');
+            $('input.form-control').val('');
+            $('input#foto_usuario_sistema').val('');
+        });
 
-    $('body').delegate('button#cambiar-password','click', function() {
-        $('#change-pass div.form-group').removeClass('has-error');//Remueve los errores de los campos
+        $('body').delegate('button#cambiar-password','click', function() {
+            $('#change-pass div.form-group').removeClass('has-error');//Remueve los errores de los campos
 
-        if ($('div#change-pass input#actualPassword').val() == '' ||
-            $('div#change-pass input#newPassword').val() == '' ||
-            $('div#change-pass input#confirmPassword').val() == '') {//Si algún campo está vacío no pasa
-            $('div#change-pass input#actualPassword').val() == '' ? $('div#change-pass input#actualPassword').parent().addClass('has-error') : ''
-            $('div#change-pass input#newPassword').val() == '' ? $('div#change-pass input#newPassword').parent().addClass('has-error') : ''
-            $('div#change-pass input#confirmPassword').val() == '' ? $('div#change-pass input#confirmPassword').parent().addClass('has-error') : ''
-            swal({
-                title: "Llene todos los campos antes de continuar.",
-                type: "error",
-                showConfirmButton: true,
-            });
-        }
-        else {
-            var id = $('div#change-pass input#id').val();
-            var token = '{{ csrf_token() }}';
-            var user = '{{ Auth::user()->user }}';
-            var actualPassword = $('div#change-pass input#actualPassword').val();
-            var newPassword = $('div#change-pass input#newPassword').val();
-            var confirmPassword = $('div#change-pass input#confirmPassword').val();
-
-            changePassword(id,user,actualPassword,newPassword,confirmPassword,token);
-        }
-    });
-
-    function changePassword(id,user,actualPassword,newPassword,confirmPassword,token) {
-        $.ajax({
-            method: "POST",
-            url: "{{url('/usuarios/sistema/change_password')}}",
-            data:{
-                "id":id,
-                "user":user,
-                "actualPassword":actualPassword,
-                "newPassword":newPassword,
-                "confirmPassword":confirmPassword,
-                "_token":token
-            },
-            success: function(data) {
-                $('div#change-pass div.form-group').removeClass('has-error');
-
-                if (data == 'contra cambiada') {
-                    swal({
-                        title: "Contraseña modificada con éxito",
-                        type: "success",
-                        showConfirmButton: true,
-                    });
-                } else if (data == 'contra nueva diferentes') {
-                    swal({
-                        title: "Las contraseñas deben ser iguales, corrijala antes de continuar",
-                        type: "error",
-                        showConfirmButton: true,
-                    });
-                    $('div#change-pass input#newPassword, div#change-pass input#confirmPassword').parent().addClass('has-error');
-                } else if (data == 'contra erronea') {
-                    swal({
-                        title: "Debe proporcionar la contraseña actual para poder cambiarla",
-                        type: "error",
-                        showConfirmButton: true,
-                    });
-                    $('div#change-pass input#actualPassword').parent().addClass('has-error');
-                }
-                //$('#guardar-usuario-sistema').show();
-            },
-            error: function(xhr, status, error) {
+            if ($('div#change-pass input#actualPassword').val() == '' ||
+                $('div#change-pass input#newPassword').val() == '' ||
+                $('div#change-pass input#confirmPassword').val() == '') {//Si algún campo está vacío no pasa
+                $('div#change-pass input#actualPassword').val() == '' ? $('div#change-pass input#actualPassword').parent().addClass('has-error') : ''
+                $('div#change-pass input#newPassword').val() == '' ? $('div#change-pass input#newPassword').parent().addClass('has-error') : ''
+                $('div#change-pass input#confirmPassword').val() == '' ? $('div#change-pass input#confirmPassword').parent().addClass('has-error') : ''
                 swal({
-                    title: "<small>Error!</small>",
-                    text: "Ha ocurrido un error mientras se cambiaba la contraseña, porfavor, trate nuevamente.<br><span style='color:#F8BB86'>\nError: " + xhr.status + " (" + error + ") "+"</span>",
-                    html: true
+                    title: "Llene todos los campos antes de continuar.",
+                    type: "error",
+                    showConfirmButton: true,
                 });
             }
+            else {
+                var id = $('div#change-pass input#id').val();
+                var token = '{{ csrf_token() }}';
+                var user = '{{ Auth::user()->user }}';
+                var actualPassword = $('div#change-pass input#actualPassword').val();
+                var newPassword = $('div#change-pass input#newPassword').val();
+                var confirmPassword = $('div#change-pass input#confirmPassword').val();
+
+                changePassword(id,user,actualPassword,newPassword,confirmPassword,token);
+            }
         });
-    }
 
-    mb = 0;
-    fileExtension = ['jpg', 'jpeg', 'png'];
-    var msgError = '';
-    var regExprAlphNum = /^[a-z ñ áéíóúäëïöüâêîôûàèìòùç\d_\s .]{2,50}$/i;
-    var btn_enviar_foto = $("#guardar-foto-usuario-sistema");
-    btn_enviar_foto.on('click', function() {
-        msgError = '';
-        inputs = [];
-        validarFotoUsuarioMain($('input#foto_usuario_sistema')) == false ? inputs.push('Foto perfil') : ''
+        function changePassword(id,user,actualPassword,newPassword,confirmPassword,token) {
+            $.ajax({
+                method: "POST",
+                url: "{{url('/usuarios/sistema/change_password')}}",
+                data:{
+                    "id":id,
+                    "user":user,
+                    "actualPassword":actualPassword,
+                    "newPassword":newPassword,
+                    "confirmPassword":confirmPassword,
+                    "_token":token
+                },
+                success: function(data) {
+                    $('div#change-pass div.form-group').removeClass('has-error');
 
-        if (inputs.length == 0) {
-            $('#guardar-foto-usuario-sistema').submit();
-        } else {
-            swal("Corrija el siguiente campo para continuar: ", msgError);
-            return false;
+                    if (data == 'contra cambiada') {
+                        swal({
+                            title: "Contraseña modificada con éxito",
+                            type: "success",
+                            showConfirmButton: true,
+                        });
+                    } else if (data == 'contra nueva diferentes') {
+                        swal({
+                            title: "Las contraseñas deben ser iguales, corrijala antes de continuar",
+                            type: "error",
+                            showConfirmButton: true,
+                        });
+                        $('div#change-pass input#newPassword, div#change-pass input#confirmPassword').parent().addClass('has-error');
+                    } else if (data == 'contra erronea') {
+                        swal({
+                            title: "Debe proporcionar la contraseña actual para poder cambiarla",
+                            type: "error",
+                            showConfirmButton: true,
+                        });
+                        $('div#change-pass input#actualPassword').parent().addClass('has-error');
+                    }
+                    //$('#guardar-usuario-sistema').show();
+                },
+                error: function(xhr, status, error) {
+                    swal({
+                        title: "<small>Error!</small>",
+                        text: "Ha ocurrido un error mientras se cambiaba la contraseña, porfavor, trate nuevamente.<br><span style='color:#F8BB86'>\nError: " + xhr.status + " (" + error + ") "+"</span>",
+                        html: true
+                    });
+                }
+            });
         }
-    });
 
-    $('input#foto_usuario_sistema').bind('change', function() {
-        if ($(this).val() != '') {
+        mb = 0;
+        fileExtension = ['jpg', 'jpeg', 'png'];
+        var msgError = '';
+        var regExprAlphNum = /^[a-z ñ áéíóúäëïöüâêîôûàèìòùç\d_\s .]{2,50}$/i;
+        var btn_enviar_foto = $("#guardar-foto-usuario-sistema");
+        btn_enviar_foto.on('click', function() {
+            msgError = '';
+            inputs = [];
+            validarFotoUsuarioMain($('input#foto_usuario_sistema')) == false ? inputs.push('Foto perfil') : ''
 
-            kilobyte = (this.files[0].size / 1024);
-            mb = kilobyte / 1024;
+            if (inputs.length == 0) {
+                $('#guardar-foto-usuario-sistema').submit();
+            } else {
+                swal("Corrija el siguiente campo para continuar: ", msgError);
+                return false;
+            }
+        });
 
-            archivo = $(this).val();
+        $('input#foto_usuario_sistema').bind('change', function() {
+            if ($(this).val() != '') {
+
+                kilobyte = (this.files[0].size / 1024);
+                mb = kilobyte / 1024;
+
+                archivo = $(this).val();
+                extension = archivo.split('.').pop().toLowerCase();
+
+                if ($.inArray(extension, fileExtension) == -1 || mb >= 5) {
+                    swal({
+                        title: "Archivo no válido",
+                        text: "Debe seleccionar una imágen con formato jpg, jpeg o png, y debe pesar menos de 5MB",
+                        type: "error",
+                        closeOnConfirm: false
+                    });
+                }
+            }
+        });
+
+        function validarFotoUsuarioMain(campo) {
+            archivo = $(campo).val();
             extension = archivo.split('.').pop().toLowerCase();
 
             if ($.inArray(extension, fileExtension) == -1 || mb >= 5) {
-                swal({
-                    title: "Archivo no válido",
-                    text: "Debe seleccionar una imágen con formato jpg, jpeg o png, y debe pesar menos de 5MB",
-                    type: "error",
-                    closeOnConfirm: false
-                });
+                $(campo).parent().addClass("has-error");
+                msgError = msgError + $(campo).parent().children('label').text() + '\n';
+                return false;
+            } else {
+                $(campo).parent().removeClass("has-error");
+                return true;
             }
         }
-    });
 
-    function validarFotoUsuarioMain(campo) {
-        archivo = $(campo).val();
-        extension = archivo.split('.').pop().toLowerCase();
-
-        if ($.inArray(extension, fileExtension) == -1 || mb >= 5) {
-            $(campo).parent().addClass("has-error");
-            msgError = msgError + $(campo).parent().children('label').text() + '\n';
-            return false;
-        } else {
-            $(campo).parent().removeClass("has-error");
-            return true;
-        }
-    }
-
-    $('body').delegate('.loggingOut','click', function() {
-        swal({
-            title: "¿Desea cerrar la sesión?",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Salir",
-            cancelButtonText: "Cancelar",
-            closeOnConfirm: false
-        },
-        function() {
-            window.location.href = "<?php echo url();?>/logout";
+        $('body').delegate('.loggingOut','click', function() {
+            swal({
+                title: "¿Desea cerrar la sesión?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Salir",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+            },
+            function() {
+                window.location.href = "<?php echo url();?>/logout";
+            });
         });
-    });
     </script>
 
 </body>

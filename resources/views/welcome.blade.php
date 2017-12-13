@@ -48,8 +48,6 @@
         input.form-control {
             background-color: #6A6A6A!important;
             border: none;
-            /*outline: 0;
-            border-bottom: 2px solid #F29100;*/
         }
         button{
             height: 50px !important;

@@ -1,9 +1,8 @@
 /*
 SQLyog Ultimate v9.63 
-MySQL - 5.5.5-10.1.21-MariaDB : Database - kidscut
+MySQL - 5.5.5-10.1.21-MariaDB : Database - world_look
 *********************************************************************
-*/
-
+*/
 
 /*!40101 SET NAMES utf8 */;
 
@@ -414,7 +413,7 @@ CREATE TABLE `users` (
 
 /*Data for the table `users` */
 
-insert  into `users`(`id`,`user`,`password`,`email`,`foto_usuario`,`remember_token`,`status`,`created_at`,`updated_at`) values (1,'conrado.carrillo','$2y$10$hPxSH9GAcKTrI1zqP.beROrfWbsYCoFH7bODs5nZ5XYvL6dX5yTQW','anton_con@hotmail.com','img/user_perfil/default.jpg','cS3SU3kMC7EEI1XKZkKyWzV6A61fYd9lCnlwMGko0w3IuQS24rHixXZWgkmi',1,'2017-03-23 11:30:45','2017-12-11 23:25:48'),(2,'admin','$2y$10$f5qOMC5k2fFgKY2tp3tTe.RrB8MqZBfV4BP32NAdidqLJP2Q/K3FK','admin@kidscut.com','img/user_perfil/default.jpg','UQf3D1ahENAZxpxhwbzJFpBqBwkBjTlvrvNomI3ZRcRghuVIXxIM9VyeKles',1,'2017-08-17 17:34:22','2017-08-17 23:14:55');
+insert  into `users`(`id`,`user`,`password`,`email`,`foto_usuario`,`remember_token`,`status`,`created_at`,`updated_at`) values (1,'conrado.carrillo','$2y$10$hPxSH9GAcKTrI1zqP.beROrfWbsYCoFH7bODs5nZ5XYvL6dX5yTQW','anton_con@hotmail.com','img/user_perfil/default.jpg','ox8kmJBROTICTAqVmcmYzHEYX9KYbiQU02UfO99bpyZUcUknWgnbuR7sP0lx',1,'2017-03-23 11:30:45','2017-12-12 16:55:04'),(2,'admin','$2y$10$f5qOMC5k2fFgKY2tp3tTe.RrB8MqZBfV4BP32NAdidqLJP2Q/K3FK','admin@kidscut.com','img/user_perfil/default.jpg','UQf3D1ahENAZxpxhwbzJFpBqBwkBjTlvrvNomI3ZRcRghuVIXxIM9VyeKles',1,'2017-08-17 17:34:22','2017-08-17 23:14:55');
 
 /*Table structure for table `usuario` */
 
@@ -426,11 +425,13 @@ CREATE TABLE `usuario` (
   `nombre` varchar(200) NOT NULL,
   `apellido` varchar(200) NOT NULL,
   `correo` varchar(100) NOT NULL,
-  `foto_perfil` varchar(100) DEFAULT NULL,
+  `foto_perfil` varchar(100) DEFAULT 'http://adminworldlook.bsmx.tech/public/img/user_perfil/default.jpg',
   `celular` varchar(18) DEFAULT NULL,
   `customer_id_conekta` varchar(255) DEFAULT NULL,
-  `status` tinyint(4) DEFAULT '1',
   `tipo` tinyint(4) DEFAULT '1',
+  `red_social` tinyint(4) DEFAULT NULL,
+  `player_id` varchar(155) DEFAULT NULL,
+  `status` tinyint(4) DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
@@ -438,7 +439,7 @@ CREATE TABLE `usuario` (
 
 /*Data for the table `usuario` */
 
-insert  into `usuario`(`id`,`password`,`nombre`,`apellido`,`correo`,`foto_perfil`,`celular`,`customer_id_conekta`,`status`,`tipo`,`created_at`,`updated_at`) values (1,'a83f0f76c2afad4f5d7260824430b798','Conrado Antonio','Carrillo Rosales','anton_con@hotmail.com','img/usuario_app/default.jpg','6699333627','cus_2hDXW2ChyEarhD2zg',1,1,'2017-09-08 17:05:42','2017-09-28 17:22:10'),(2,'684c851af59965b680086b7b4896ff98','Roberto','García','roberto_gb23@hotmail.com','img/usuario_app/default.jpg','6691626966','cus_2hFTzmN79uJiCwYYS',1,1,'2017-09-20 16:09:24','2017-09-20 16:09:24'),(3,'202cb962ac59075b964b07152d234b70','Omar ','Mendozs ','mcflay5@gmail.com','img/usuario_app/default.jpg','3316056031','cus_2hFWtKfZa1Qv1rqRw',1,1,'2017-09-21 21:44:46','2017-09-21 21:44:46'),(4,'a83f0f76c2afad4f5d7260824430b798','María Fernanda','Lizárraga Osuna','marifer@hotmail.com','img/default.jpg',NULL,NULL,1,2,'2017-09-26 11:14:40','2017-09-26 11:14:40'),(5,'a83f0f76c2afad4f5d7260824430b798','Sarahí','Castillo Flores','sarahicastillo@hotmail.com','img/default.jpg',NULL,NULL,1,2,'2017-09-26 11:16:47','2017-09-26 11:16:47');
+insert  into `usuario`(`id`,`password`,`nombre`,`apellido`,`correo`,`foto_perfil`,`celular`,`customer_id_conekta`,`tipo`,`red_social`,`player_id`,`status`,`created_at`,`updated_at`) values (1,'a83f0f76c2afad4f5d7260824430b798','Conrado Antonio','Carrillo Rosales','anton_con@hotmail.com','img/usuario_app/default.jpg','6699333627','cus_2hDXW2ChyEarhD2zg',1,NULL,NULL,1,'2017-09-08 17:05:42','2017-09-28 17:22:10'),(2,'684c851af59965b680086b7b4896ff98','Roberto','García','roberto_gb23@hotmail.com','img/usuario_app/default.jpg','6691626966','cus_2hFTzmN79uJiCwYYS',1,NULL,NULL,1,'2017-09-20 16:09:24','2017-09-20 16:09:24'),(3,'202cb962ac59075b964b07152d234b70','Omar ','Mendozs ','mcflay5@gmail.com','img/usuario_app/default.jpg','3316056031','cus_2hFWtKfZa1Qv1rqRw',1,NULL,NULL,1,'2017-09-21 21:44:46','2017-09-21 21:44:46'),(4,'a83f0f76c2afad4f5d7260824430b798','María Fernanda','Lizárraga Osuna','marifer@hotmail.com','img/default.jpg',NULL,NULL,2,NULL,NULL,1,'2017-09-26 11:14:40','2017-09-26 11:14:40'),(5,'a83f0f76c2afad4f5d7260824430b798','Sarahí','Castillo Flores','sarahicastillo@hotmail.com','img/default.jpg',NULL,NULL,2,NULL,NULL,1,'2017-09-26 11:16:47','2017-09-26 11:16:47');
 
 /*Table structure for table `usuario_direcciones` */
 

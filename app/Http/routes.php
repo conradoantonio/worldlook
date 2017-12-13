@@ -130,38 +130,36 @@ Route::get('/data','estadosController@analytics');//Devuelve los datos de google
  *=                                             Empiezan las funciones relacionadas a la api para la aplicación                                             =
  *===========================================================================================================================================================
  */
-Route::get('/form','dataAppController@cargar_form_conekta');//Carga el formulario de prueba de conekta
+Route::group(['prefix' => 'api/v1'], function () {
+	Route::post('validar_cargo','dataAppController@crear_cliente');//Crea un cliente
+	Route::post('orden_empresa','dataAppController@obtener_ordenes');//Obtiene las pedidos de las empresas
 
-Route::post('/generar_token','dataAppController@generar_token');//Genera un token de prueba
-Route::post('/post_send','dataAppController@post_send');//Procesa los datos después de generar el token
-Route::get('/app/cupones_validos_usuario/{usuario_id}','dataAppController@cupones_validos_usuario');//Regresa todos los cupones válidos del usuario incluyendo los generales.
-Route::post('app/validar_cargo','dataAppController@crear_cliente');//Crea un cliente
-//Route::post('/crear_cliente','dataAppController@crear_cliente');//Crea un cliente
-Route::post('/procesar_orden','dataAppController@procesar_orden');//Procesa una orden
-Route::post('/app/orden_empresa','dataAppController@obtener_ordenes');//Obtiene las pedidos de las empresas
+	Route::post('registro_usuario','dataAppController@registro_app');//Registra un usuario en la aplicación.
+	Route::post('login/cliente','dataAppController@login_app_cliente');//Valida el inicio de sesión de un usuario cliente en la aplicación.
+	Route::post('login/estilista','dataAppController@login_app_estilista');//Valida el inicio de sesión de un usuario estilista en la aplicación.
+	Route::post('actualizar_usuario','dataAppController@actualizar_datos_usuario');//Actualiza los datos del usuario a excepción de la contraseña, email y foto.
+	Route::post('actualizar_contra','dataAppController@actualizar_password_usuario');//Actualiza los datos del usuario a excepción de la contraseña, email y foto.
+	Route::post('recuperar_contra','dataAppController@recuperar_contra');//Envía una contraseña nueva generada automáticamente al correo del usuario.
+	Route::post('actualizar_foto','dataAppController@actualizar_foto');//Actualiza la foto de perfil de un usuario.
+	Route::post('agregar_direccion','dataAppController@agregar_direccion_usuario_app');//Agrega una dirección para el usuario.
+	Route::post('actualizar_direccion','dataAppController@actualizar_direccion_usuario_app');//Actualiza una dirección del usuario.
+	Route::post('listar_direcciones','dataAppController@listar_direcciones');//Muestra una lista de todas las direcciones del usuario de la aplicación.
+	Route::post('eliminar_direccion','dataAppController@eliminar_direccion_usuario_app');//Elimina una dirección del usuario de la aplicación.
+	Route::post('calificar_servicio','dataAppController@calificar_servicio');//Califica un servicio y lo marca como terminado.
+	Route::get('productos_categoria','dataAppController@productos_categoria');//Regresa todos los productos enlistados por categorias.
+	Route::get('estilistas','dataAppController@listar_estilistas');//Regresa todos los estilistas disponibles.
+	Route::get('estilistas/servicios/{estilista_id}','dataAppController@listar_servicios_estilistas');//Regresa todos los servicios que tiene un estilista dividiéndolos entre pendientes y finalizados.
+	Route::get('usuarios/servicios/{usuario_id}','dataAppController@listar_servicios_usuario');//Regresa todos los servicios que tiene un usuario dividiéndolos entre pendientes y finalizados.
+	Route::get('servicios_por_calificar_cliente/{cliente_id}','dataAppController@servicios_sin_calificar_cliente');//Regresa todos los servicios pendientes por calificar que tiene un cliente.
+	Route::post('info_empresas','dataAppController@info_empresas');//Muestra la información de las empresas de la plataforma.
+	Route::post('info_empresas/costo_envios','dataAppController@informacion_envio');//Muestra la información de envío de las empresas.
+	Route::get('preguntas_frecuentes','dataAppController@obtener_preguntas_frecuentes');//Regresa todas las preguntas frecuentes de la aplicación.
+	Route::get('listar_colonias','dataAppController@listar_colonias');//Regresa las colonias en donde hay servicio.
+	Route::post('verificar_codigo_postal','dataAppController@verificar_codigo_postal');//Regresa todas las preguntas frecuentes de la aplicación.
+	Route::post('obtener_pedidos_usuario','dataAppController@obtener_pedidos_usuario');//Devuelve los pedidos del usuario hechas desde la aplicación.
+	Route::post('enviar_correo_detalle_orden','dataAppController@enviar_correo_detalle_orden');//Envía un correo electrónico con los detalles de la orden.
+	Route::post('enviar_correo_detalle_cotizacion','dataAppController@enviar_correo_detalle_cotizacion');//Envía un correo electrónico con los detalles de la cotización.
+	Route::get('menu_detalles','dataAppController@categorias');//Envía un correo electrónico con los detalles de la cotización.
 
-Route::post('/app/registro_usuario','dataAppController@registro_app');//Registra un usuario en la aplicación.
-Route::post('/app/login','dataAppController@login_app');//Valida el inicio de sesión de un usuario en la aplicación.
-Route::post('/app/actualizar_usuario','dataAppController@actualizar_datos_usuario');//Actualiza los datos del usuario a excepción de la contraseña, email y foto.
-Route::post('/app/actualizar_contra','dataAppController@actualizar_password_usuario');//Actualiza los datos del usuario a excepción de la contraseña, email y foto.
-Route::post('/app/recuperar_contra','dataAppController@recuperar_contra');//Envía una contraseña nueva generada automáticamente al correo del usuario.
-Route::post('/app/actualizar_foto','dataAppController@actualizar_foto');//Actualiza la foto de perfil de un usuario.
-Route::post('/app/agregar_direccion','dataAppController@agregar_direccion_usuario_app');//Agrega una dirección para el usuario.
-Route::post('/app/actualizar_direccion','dataAppController@actualizar_direccion_usuario_app');//Actualiza una dirección del usuario.
-Route::post('/app/listar_direcciones','dataAppController@listar_direcciones');//Muestra una lista de todas las direcciones del usuario de la aplicación.
-Route::post('/app/eliminar_direccion','dataAppController@eliminar_direccion_usuario_app');//Elimina una dirección del usuario de la aplicación.
-Route::post('/app/calificar_servicio','dataAppController@calificar_servicio');//Califica un servicio y lo marca como terminado.
-Route::get('/app/productos_categoria','dataAppController@productos_categoria');//Regresa todos los productos enlistados por categorias.
-Route::get('/app/estilistas','dataAppController@listar_estilistas');//Regresa todos los estilistas disponibles.
-Route::get('/app/estilistas/servicios/{estilista_id}','dataAppController@listar_servicios_estilistas');//Regresa todos los servicios que tiene un estilista dividiéndolos entre pendientes y finalizados.
-Route::get('/app/usuarios/servicios/{usuario_id}','dataAppController@listar_servicios_usuario');//Regresa todos los servicios que tiene un usuario dividiéndolos entre pendientes y finalizados.
-Route::get('/app/servicios_por_calificar_cliente/{cliente_id}','dataAppController@servicios_sin_calificar_cliente');//Regresa todos los servicios pendientes por calificar que tiene un cliente.
-Route::post('/app/info_empresas','dataAppController@info_empresas');//Muestra la información de las empresas de la plataforma.
-Route::post('/app/info_empresas/costo_envios','dataAppController@informacion_envio');//Muestra la información de envío de las empresas.
-Route::get('/app/preguntas_frecuentes','dataAppController@obtener_preguntas_frecuentes');//Regresa todas las preguntas frecuentes de la aplicación.
-Route::get('/app/listar_colonias','dataAppController@listar_colonias');//Regresa las colonias en donde hay servicio.
-Route::post('/app/verificar_codigo_postal','dataAppController@verificar_codigo_postal');//Regresa todas las preguntas frecuentes de la aplicación.
-Route::post('/app/obtener_pedidos_usuario','dataAppController@obtener_pedidos_usuario');//Devuelve los pedidos del usuario hechas desde la aplicación.
-Route::post('/app/enviar_correo_detalle_orden','dataAppController@enviar_correo_detalle_orden');//Envía un correo electrónico con los detalles de la orden.
-Route::post('/app/enviar_correo_detalle_cotizacion','dataAppController@enviar_correo_detalle_cotizacion');//Envía un correo electrónico con los detalles de la cotización.
-Route::get('/app/menu_detalles','dataAppController@categorias');//Envía un correo electrónico con los detalles de la cotización.
+	Route::post('actualizar_player_id','dataAppController@actualizar_player_id');//Actualiza el player id de un usuario de la aplicación
+});

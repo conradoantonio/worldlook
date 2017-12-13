@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'mail.belyapp.com'),
+    'host' => env('MAIL_HOST', 'mail.bsmx.tech'),
 
     /*
     |--------------------------------------------------------------------------
@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'soporte@belyapp.com', 'name' => 'Bely app'],
+    'from' => ['address' => 'worldlook@bsmx.tech', 'name' => 'World Look'],
 
     /*
     |--------------------------------------------------------------------------

@@ -31,13 +31,32 @@ use Mail;
 use PDO;
 use DB;
 
-
 require_once("conekta-php-master/lib/Conekta.php");
 \Conekta\Conekta::setApiKey("key_zg7tH7kqBQiSkmmaw4MLcw");
 \Conekta\Conekta::setApiVersion("2.0.0");
 
 class dataAppController extends Controller
 {
+    function __construct() {
+        #Configuración de fecha
+        date_default_timezone_set('America/Mexico_City');
+        $this->actual_datetime = date('Y-m-d H:i:s');
+        $this->actual_time = date('H:i:s');
+        $this->day_number = date('w');
+        
+        #App ID
+        $this->app_cliente_id = "b9353941-8d21-41f5-a025-691344b1e6c3";
+        $this->app_estilista_id = "9b030a7b-729e-498f-bff9-b1de8cefd352";
+
+        #Llaves
+        $this->app_cliente_key = "MGE2NDA2OGYtNjNhZi00N2VkLTllZWEtN2EyMzQ0YTg2ZWE3";
+        $this->app_estilista_key = "ODA0ZGIwY2EtMjEzNy00NDg3LWEyNDgtMGM0M2EzNDYxYTkz";
+        
+        #Íconos
+        $this->app_cliente_icon = "http://cocoinbox.bsmx.tech/public/img/icono_cliente.png";
+        $this->app_estilista_icon = "http://cocoinbox.bsmx.tech/public/img/icono_repartidor.png";
+    }
+
     /**
      * Crea un nuevo usuario en caso de que el email proporcionado no se haya utilizado antes para un usuario.
      *
@@ -46,52 +65,86 @@ class dataAppController extends Controller
      */
     public function registro_app(Request $request) 
     {
-        if(count(Usuario::buscar_usuario_por_correo($request->email))) {
+        if (count(Usuario::buscar_usuario_por_correo($request->correo))) {
+            if ($request->red_social) {
+                $usuario_app = Usuario::where('correo', $request->correo)
+                ->first();
+                
+                $this->logs($usuario_app->id);
+
+                return $usuario_app;
+            }
             return 0;
         } else {
             $usuario_app = new Usuario;
-            $usuario_app->password = md5($request->password);
-            $usuario_app->nombre = $request->name;
-            $usuario_app->apellido = $request->lastname;
-            $usuario_app->correo = $request->email;
-            $usuario_app->foto_perfil = "img/usuario_app/default.jpg";
-            $usuario_app->celular = $request->cellphone;
+
+            if (!$request->red_social) {
+                $usuario_app->password = md5($request->password);
+                $usuario_app->celular = $request->celular;
+            } 
+            $usuario_app->nombre = $request->nombre;
+            $usuario_app->apellido = $request->apellido;
+            $usuario_app->correo = $request->correo;
+            $request->foto_perfil ? $usuario_app->foto_perfil = $request->foto_perfil : '';
+            $usuario_app->red_social = $request->red_social;
+            $usuario_app->player_id = $request->player_id;
+
             $usuario_app->status = 1;
-            $usuario_app->created_at = date('Y-m-d H:i:s');
+            $usuario_app->tipo = 1;//Significa que el usuario es un cliente
+            $usuario_app->created_at = $this->actual_datetime;
 
             $usuario_app->save();
+            
+            $this->logs($usuario_app->id);
 
-            DB::table('registro_logs')->insert([
-                'user_id' => $usuario_app->id,
-                'fechaLogin' => DB::raw('CURDATE()')
-            ]);
             return Usuario::where('id', $usuario_app->id)
-            ->select(DB::raw('id, nombre AS name, apellido AS lastname, correo AS email, foto_perfil AS photo, celular AS cellphone, tipo AS type, status'))
             ->first();
         }
     }
 
     /**
-     * Valida que los datos de un login sean correctos en la aplicación y registra un log
+     * Valida que los datos de un login sean correctos en la aplicación del cliente y registra un log
      *
      * @param  Request  $request
      * @return $usuario si es correcto el inicio de sesión o 0 si los datos son incorrectos.
      */
-    public function login_app(Request $request) 
+    public function login_app_cliente(Request $request) 
     {
         DB::setFetchMode(PDO::FETCH_ASSOC);
-        $usuario = DB::table('usuario')
-        ->select(DB::raw('id, nombre AS name, apellido AS lastname, correo AS email, foto_perfil AS photo, celular AS cellphone, tipo AS type, status'))
-        ->where('usuario.correo', '=', $request->email)
+        $usuario = Usuario::where('usuario.correo', '=', $request->correo)
         ->where('usuario.password', '=', md5($request->password))
         ->where('usuario.status', '=', 1)
+        ->where('usuario.tipo', '=', 1)
         ->first();
 
         if (count($usuario) > 0) {
             $this->logs($usuario['id']);
             return $usuario;
         } else {
-            return 0;//No se encontró nada
+            return 0;
+        }
+    }
+
+    /**
+     * Valida que los datos de un login sean correctos en la aplicación del repartidor y registra un log
+     *
+     * @param  Request  $request
+     * @return $usuario si es correcto el inicio de sesión o 0 si los datos son incorrectos.
+     */
+    public function login_app_estilista(Request $request) 
+    {
+        DB::setFetchMode(PDO::FETCH_ASSOC);
+        $usuario = Usuario::where('usuario.correo', '=', $request->correo)
+        ->where('usuario.password', '=', md5($request->password))
+        ->where('usuario.status', '=', 1)
+        ->where('usuario.tipo', '=', 2)
+        ->first();
+
+        if (count($usuario) > 0) {
+            $this->logs($usuario['id']);
+            return $usuario;
+        } else {
+            return 0;
         }
     }
 
@@ -106,9 +159,10 @@ class dataAppController extends Controller
         $usuario_app = Usuario::find($request->id);
 
         if (count($usuario_app)) {
-            $usuario_app->nombre = $request->name;
-            $usuario_app->apellido = $request->lastname;
-            $usuario_app->celular = $request->cellphone;
+            $request->password ? $usuario_app->password = md5($request->password) : '';
+            $request->nombre ? $usuario_app->nombre = $request->nombre : '';
+            $request->apellido ? $usuario_app->apellido = $request->apellido : '';
+            $request->celular ? $usuario_app->celular = $request->celular : '';
 
             $usuario_app->save();
 
@@ -426,25 +480,22 @@ class dataAppController extends Controller
      */
     public function recuperar_contra(Request $request)
     {
-        if (count(Usuario::buscar_usuario_por_correo($request->correo))) {
+        $correo = $request->correo;
+        if (count(Usuario::buscar_usuario_por_correo($correo))) {
             $new_pass = str_random(7);
-            DB::table('usuario')
-            ->where('correo', $request->correo)
+            Usuario::where('correo', $correo)
             ->update(['password' => md5($new_pass)]);
 
-            $msg = "Se ha cambiado la contraseña para el acceso a la aplicación Bely.".
-            "\nSu nueva contraseña es: ".$new_pass.
-            "\nNo brinde a ninguna persona información confidencial sobre sus contraseñas o tarjetas.";
-            $subject = "Restablecimiento de contraseña";
-            $to = $request->correo;
+            $subject = "World Look | Restablecimiento de contraseña";
+            $to = $correo;
 
-            $enviado = Mail::raw($msg, function($message) use ($to, $subject) {
-                $message->to($to)->subject($subject);
+            Mail::send('emails.recuperar_usuario', ['contra' => $new_pass], function ($message)  use ($to, $subject)
+            {
+                $message->to($to);
+                $message->subject($subject);
             });
 
-            if ($enviado) {
-                return ['msg' => 'Enviado'];
-            }
+            return ['msg' => 'Enviado'];
         }
 
         return ['msg' => 'Error al enviar correo'];
@@ -476,30 +527,6 @@ class dataAppController extends Controller
     }
 
     /**
-     * Obtiene todas las órdenes hechas por los usuarios.
-     *
-     * @param  
-     * @return $ordenes
-     */
-    public function obtener_ordenes()
-    {
-        return Servicio::obtener_pedidos();
-    }
-
-    /**
-     * Obtiene la información de todas las empresas.
-     *
-     * @return 
-     */
-    public function info_empresas()
-    {
-        return DB::table('informacion_empresa')
-        ->select(DB::raw('informacion_empresa.*, empresa.nombre as empresa'))
-        ->leftJoin('empresa', 'informacion_empresa.empresa_id', '=', 'empresa.id')
-        ->get();
-    }
-
-    /**
      * Registra un nuevo inicio de sesión de la aplicación.
      *
      * @param  $id_usuario
@@ -518,29 +545,6 @@ class dataAppController extends Controller
      *===================================================================================================================================
      */
     
-    /**
-     * Genera un token
-     *
-     * @param  Request $request
-     * @return $nombre_foto si la imagen fue subida exitosamente, 0 si hubo algún error subiendo la imagen.
-     */
-    public function generar_token(Request $request)
-    {
-        return $request->conektaTokenId;
-    }
-
-    /**
-     * Carga el formulario de prueba para conekta.
-     *
-     * @param  Request $request
-     * @return $nombre_foto si la imagen fue subida exitosamente, 0 si hubo algún error subiendo la imagen.
-     */
-    public function cargar_form_conekta()
-    {
-        $title = $menu = 'Pedidos';
-        return view('pruebas_conekta.form_prueba', ['menu' => $menu, 'title' => $title]);
-    }
-
     /**
      * Busca si existe un usuario con un customer_id_conekta en la base de datos, si lo encuentra actualiza su método de pago
      * Caso contrario, se crea un cliente con la información del request.
@@ -653,7 +657,7 @@ class dataAppController extends Controller
                 "shipping_lines" => array(
                     array(
                         "amount" => 0,
-                        "carrier" => "Home Cuts"
+                        "carrier" => "World Look"
                     )
                 ), //shipping_lines
                 "currency" => "MXN",
@@ -752,89 +756,6 @@ class dataAppController extends Controller
         }
     }//End function
     
-    /**
-     *Retorna el porcentaje de descuento de la orden en caso de que exista un cupón de descuento
-     * 
-     * @param  decimal $porcentaje
-     */
-    public function validar_cupon($request, $usuario_id)
-    {
-        $total = 0;
-        foreach ($request->productos as $producto) {
-            $total += ($producto['unit_price'] * $producto['quantity']);
-        }
-
-        $cupon = Cupon::validar_cupon($request->cupon_id, $usuario_id);
-        if ($cupon) {
-            $porcentaje = ($cupon->porcentaje_descuento/100);
-
-            if ($cupon->tipo_cupon == 'general') {
-                return ($total * $porcentaje);
-            } else if ($cupon->tipo_cupon == 'individual') {
-                if ($cupon->cantidad_servicios) {
-                    $num_serv = $this->count_servicios($request->productos);
-                    if ($num_serv >= $cupon->cantidad_servicios) {
-                        return $total * $porcentaje;
-                    }
-                } else if ($cupon->cantidad_productos) {
-                    $num_prod = $this->count_productos($request->productos);
-                    if ($num_prod >= $cupon->cantidad_productos) {
-                        return $total * $porcentaje;
-                    }
-                }
-            }
-        }
-        
-        return 0;
-    }
-
-    /**
-     *Retorna el número de productos de una orden.
-     * 
-     * @param  int $count
-     */
-    public function count_productos($items)
-    {
-        $count = 0;
-        foreach ($items as $item) {
-            if ($item['type'] == 'producto') {
-                $count += $item['quantity'];
-            }
-        }
-        return $count;
-    }
-
-    /**
-     *Retorna el número de productos de una orden.
-     * 
-     * @param  int $count
-     */
-    public function count_servicios($items)
-    {
-        $count = 0;
-        foreach ($items as $item) {
-            if ($item['type'] == 'servicio') {
-                $count += $item['quantity'];
-            }
-        }
-        return $count;
-    }
-
-    /**
-     * Agrega un registro nuevo al historial de cupones usados por el usuario.
-     * 
-     * @param  int $user_id, int $cupon_id
-     */
-    public function marcar_cupon_como_usado($cupon_id, $user_id)
-    {
-        $cupon = New CuponHistorial;
-
-        $cupon->cupon_id = $cupon_id;
-        $cupon->user_id = $user_id;
-
-        $cupon->save();
-    }
-
     /**
      * Cambia el número de stock de los productos
      * 
@@ -1059,5 +980,162 @@ class dataAppController extends Controller
             return ['msg'=>'Enviado'];
         }
         return ['msg' => 'Error enviando el mensaje'];
+    }
+
+    /**
+     *========================================================================================================================================================================
+     *=                                                      Empiezan los métodos para las notificaciones con onesignal                                                      =
+     *========================================================================================================================================================================
+     */
+
+    /**
+     * Actualiza el player_id de un usuario
+     * 
+     * @return json
+     */
+    public function actualizar_player_id(Request $req)
+    {
+        $user = Usuario::find($req->usuario_id);
+        $user->player_id = $req->player_id;
+        $user->save();
+
+        return response(['msg' => 'Player ID modificado con éxito'], 200);
+    }
+
+    /**
+    * Envía una notificación a todos los usuarios de la aplicación
+    * @return $response
+    */
+    public function enviar_notificacion_a_todos() 
+    {
+        $content = array(
+            "en" => 'English Message'
+        );
+        
+        $fields = array(
+            'app_id' => $this->app_customer_id,//"15c4f224-e280-436d-9bb8-481c11fb4c3c",
+            'included_segments' => array('All'),
+            'data' => array("foo" => "bar"),
+            'contents' => $content
+        );
+        
+        $fields = json_encode($fields);
+        /*print("\nJSON sent:\n");
+        print($fields);*/
+        
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json; charset=utf-8',
+                                                   'Authorization: Basic ODAwMjZlM2QtNDNhYy00YTRhLWI1YWUtMGQyOWFkMjcwNDY4'));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+        
+        //return $response;
+    }
+
+    /**
+    * Envía una notificación individual a un usuario que puede ser repartidor o cliente
+    * @return $response
+    */
+    public function enviar_notificacion_individual($app_id, $titulo, $mensaje, $data, $player_ids, $app_customer_key, $icon)
+    {
+        $content = array(
+            "en" => $mensaje
+        );
+
+        $header = array(
+            "en" => $titulo
+        );
+        
+        $fields = array(
+            'app_id' => $app_id,
+            'include_player_ids' => $player_ids,
+            'data' => $data,
+            'headings' => $header,
+            'contents' => $content,
+            'large_icon' => $icon
+        );
+        
+        
+        $fields = json_encode($fields);
+ 
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json; charset=utf-8',
+                                                   "Authorization: Basic $app_customer_key"));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        return 1;
+    }
+
+    /**
+    * Envía una notificación individual a un usuario cliente que le indica que su pedido está a aproximadamente 100 metros de llegar.
+    * @return $response
+    */
+    public function enviar_notificacion_pedido_cercano(Request $request)
+    {
+        $servicio = Servicio::where('id', $request->pedido_id)->first();
+        if ($servicio) {
+            if ($servicio->notificado == 0) {
+                $player_ids [] = Usuario::obtener_player_id($request->usuario_id);
+
+                $app_id = $this->app_customer_id;
+                $app_customer_key = $this->app_customer_key;
+                $titulo = $request->header;
+                $mensaje = $request->mensaje;
+                $data = $request->data;
+
+                $content = array(
+                    "en" => $mensaje
+                );
+
+                $header = array(
+                    "en" => $titulo
+                );
+                
+                $fields = array(
+                    'app_id' => $app_id,
+                    'include_player_ids' => $player_ids,
+                    'data' => $data,
+                    'headings' => $header,
+                    'contents' => $content,
+                    'large_icon' => $this->app_customer_icon
+                );
+
+                $fields = json_encode($fields);
+         
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json; charset=utf-8',
+                                                           "Authorization: Basic $app_customer_key"));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+                curl_setopt($ch, CURLOPT_HEADER, FALSE);
+                curl_setopt($ch, CURLOPT_POST, TRUE);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+                $response = curl_exec($ch);
+                curl_close($ch);
+
+                Servicio::where('id', $request->pedido_id)->update(['notificado' => 1]);
+
+                return 1;
+            } else {
+                return 0;
+            }
+        }
     }
 }
