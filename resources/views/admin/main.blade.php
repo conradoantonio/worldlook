@@ -2,10 +2,11 @@
 <html lang="en">
 
 <head>
-    <title>@yield('title', isset($title) ? $title .' | HomeCuts' : 'HomeCuts')</title>
+    <title>@yield('title', isset($title) ? $title .' | World Look' : 'World Look')</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title></title>
     <link rel="stylesheet" href="{{ asset('plugins/pace/pace-theme-flash.css')}}"  type="text/css" media="screen"/>
     <link rel="stylesheet" href="{{ asset('plugins/jquery-scrollbar/jquery.scrollbar.css')}}"  type="text/css"/>
@@ -80,7 +81,7 @@
                         <a href="#" class="dropdown-toggle" id="my-task-list" data-placement="bottom" data-content="">
                             <div class="user-details"> 
                                 <div class="username">
-                                    <span class="badge badge-important"></span><span>{{Auth::user()->user}}</span>                                  
+                                    <span class="badge badge-important"></span><span>{{auth()->user()->user}}</span>                                  
                                 </div>                      
                             </div> 
                             <div class="iconset"></div>
@@ -89,7 +90,7 @@
                         <!-- END NOTIFICATION CENTER -->
                         <!-- BEGIN PROFILE PICTURE -->
                         <div class="profile-pic"> 
-                            <img src="{{ asset(Auth::user()->foto_usuario) }}" alt="" data-src="{{ asset(Auth::user()->foto_usuario) }}" data-src-retina="{{ asset(Auth::user()->foto_usuario) }}" width="35" height="35" /> 
+                            <img src="{{ asset(auth()->user()->foto_usuario) }}" alt="" data-src="{{ asset(auth()->user()->foto_usuario) }}" data-src-retina="{{ asset(auth()->user()->foto_usuario) }}" width="35" height="35" /> 
                         </div>  
                         <!-- END PROFILE PICTURE -->                
                     </div>
@@ -128,11 +129,11 @@
             <!-- BEGIN MINI-PROFILE -->
             <div class="user-info-wrapper"> 
                 <div class="profile-wrapper">
-                    <img src=" {{ asset(Auth::user()->foto_usuario) }}" alt="" data-src=" {{ asset(Auth::user()->foto_usuario) }}" data-src-retina=" {{ asset(Auth::user()->foto_usuario) }}" width="69" height="69" />
+                    <img src=" {{ asset(auth()->user()->foto_usuario) }}" alt="" data-src=" {{ asset(auth()->user()->foto_usuario) }}" data-src-retina=" {{ asset(auth()->user()->foto_usuario) }}" width="69" height="69" />
                 </div>
                 <div class="user-info">
                     <div class="greeting">Bienvenido</div>
-                    <div class="username"><span class="semi-bold">{{Auth::user()->user}}</span></div>
+                    <div class="username"><span class="semi-bold">{{auth()->user()->user}}</span></div>
                     <div class="status">Status<a href="#"><div class="status-icon green"></div>Online</a></div>
                 </div>
             </div>
@@ -142,7 +143,7 @@
             <ul>    
                 <!-- BEGIN SELECTED LINK -->
                 <li class="start {{$menu == 'Inicio' ? 'active' : ''}}">
-                    <a href="<?php echo url();?>/dashboard">
+                    <a href="{{url('dashboard')}}">
                         <i class="icon-custom-home"></i>
                         <span class="title">Inicio</span>
                         <span class="selected"></span>
@@ -160,12 +161,12 @@
                 <!-- END SINGLE LINK -->
 
                 <!-- BEGIN SINGLE LINK -->
-                {{-- <li class="{{$menu == 'Estilistas' ? 'active' : ''}}">
+                <li class="{{$menu == 'Estilistas' ? 'active' : ''}}">
                     <a href="{{url('estilistas')}}">
                         <i class="fa fa-male" aria-hidden="true"></i>
                         <span class="title">Estilistas</span>
                     </a>
-                </li> --}}
+                </li>
                 <!-- END SINGLE LINK -->
     
                 <!-- BEGIN SINGLE LINK -->
@@ -228,14 +229,23 @@
                 <!-- END ONE LEVEL MENU -->
 
                 <!-- BEGIN SINGLE LINK -->
-                <li class="{{$menu == 'Ionic' ? 'active' : ''}}">
-                    <a href="<?php echo url();?>/notificaciones_app">
+                <li class="{{$menu == 'Notificaciones' ? 'active' : ''}}">
+                    <a href="{{url('notificaciones_app')}}">
                         <i class="fa fa-bell" aria-hidden="true"></i>
                         <span class="title">Notificaciones app</span>
                     </a>
                 </li>
                 <!-- END SINGLE LINK -->
 
+                <!-- BEGIN SINGLE LINK -->
+                    <li class="{{$menu == 'Noticias' ? 'active' : ''}}">
+                        <a href="{{url('noticias')}}">
+                            <i class="fa fa-newspaper-o" aria-hidden="true"></i>
+                            <span class="title">Noticias</span>
+                        </a>
+                    </li>
+                    <!-- END SINGLE LINK -->
+                
                 <!-- BEGIN SINGLE LINK -->
                 {{-- <li class="{{$menu == 'Galería' ? 'active' : ''}}">
                     <a href="{{url('galeria')}}">
@@ -311,8 +321,8 @@
                         <div class="row">
                             <div class="col-sm-12 col-xs-12 hidden">
                                 <div class="form-group">
-                                    <label for="id">ID</label>
-                                    <input type="text" id="id" value="{{auth()->user()->id}}">
+                                    <label for="user_pass_id">ID</label>
+                                    <input type="text" id="user_pass_id" value="{{auth()->user()->id}}">
                                 </div>
                             </div>
                             <div class="col-sm-12 col-xs-12">
@@ -356,8 +366,8 @@
                             <div class="row">
                                 <div class="col-sm-12 col-xs-12 hidden">
                                     <div class="form-group">
-                                        <label for="id">ID</label>
-                                        <input type="text" id="id" name="id" value="{{auth()->user()->id}}">
+                                        <label for="user_photo_id">ID</label>
+                                        <input type="text" id="user_photo_id" name="user_photo_id" value="{{auth()->user()->id}}">
                                     </div>
                                 </div>
                             </div>
@@ -422,6 +432,13 @@
 
 
     <script type="text/javascript">
+        $( document ).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        });
         var baseUrl = "{{url('')}}";
         window.b_url = "{{url('')}}";
         $('#change-pass, #cambiar_foto_usuario_sistema').on('hidden.bs.modal', function (e) {
@@ -446,7 +463,7 @@
                 });
             }
             else {
-                var id = $('div#change-pass input#id').val();
+                var id = $('div#change-pass input#user_pass_id').val();
                 var token = '{{ csrf_token() }}';
                 var user = '{{ Auth::user()->user }}';
                 var actualPassword = $('div#change-pass input#actualPassword').val();
@@ -462,7 +479,7 @@
                 method: "POST",
                 url: "{{url('/usuarios/sistema/change_password')}}",
                 data:{
-                    "id":id,
+                    "user_pass_id":id,
                     "user":user,
                     "actualPassword":actualPassword,
                     "newPassword":newPassword,

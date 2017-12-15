@@ -39,7 +39,6 @@
 						        <div class="tab-content">
 						            <div class="tab-pane active" id="tabNotGen">
 				                        <form id="form_notificaciones_generales" action="{{url('notificaciones_app/enviar/general')}}" onsubmit="return false" method="POST" autocomplete="off">
-										    <input type="hidden" name="_token" id="token" value="{!! csrf_token() !!}">
 									        <div class="row">
 									        	<div class="col-sm-12 col-xs-12">
 						                            <div class="form-group">
@@ -47,7 +46,7 @@
 														<select name="aplicacion" id="aplicacion_general" name="aplicacion" class="form-control" style="width: 100%">
 															<option value="0" selected>Seleccionar aplicación</option>
 															<option value="1">Cliente</option>
-															<option value="2">Repartidor</option>
+															<option value="2">Estilista</option>
 														</select>
 													</div>
 												</div>
@@ -90,7 +89,6 @@
 						            </div>
 						            <div class="tab-pane" id="tabNotInd">
 				                        <form id="form_notificaciones_individuales" action="{{url('notificaciones_app/enviar/individual')}}" onsubmit="return false" method="POST" autocomplete="off">
-										    <input type="hidden" name="_token" id="token" value="{!! csrf_token() !!}">
 			                    			<div class="row">
 			                    				<div class="col-sm-12 col-xs-12">
 						                            <div class="form-group">
@@ -98,7 +96,7 @@
 														<select name="aplicacion" id="aplicacion_individual" name="aplicacion" class="form-control" style="width: 100%">
 															<option value="0" selected>Seleccionar aplicación</option>
 															<option value="1">Cliente</option>
-															<option value="2">Repartidor</option>
+															<option value="2">Estilista</option>
 														</select>
 													</div>
 												</div>
@@ -111,7 +109,7 @@
 				                                <div class="col-sm-6 col-xs-12">
 						                            <div class="form-group">
 						                                <label for="">Fecha</label>
-						                                <input type="text" name="fecha" class='form-control' id='fecha_individual'>
+						                                <input type="text" name="fecha" class='form-control' id='fecha_individual' placeholder="Ej. 2020-12-27">
 						                            </div>
 						                        </div>
 			                    				<div class="col-sm-12 col-xs-12">

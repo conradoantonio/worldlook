@@ -108,8 +108,20 @@ Route::post('/pedidos/obtener_info_pedido','ServiciosController@obtener_pedido_p
 Route::post('/pedidos/cargar_estilistas_disponibles','ServiciosController@cargar_estilistas_disponibles');//Muestra los estilistas disponibles dentro de un rango de fechas.
 Route::post('/pedidos/asignar_estilista','ServiciosController@asignar_estilista');//Actualiza el número de seguimiento (numero de guía) de un pedido.
 
-/*-- Ruta para iframe --*/
-Route::get('/notificaciones_app','ionicController@index');//Carga el login de ionic
+/*-- Rutas para las notificaciones --*/
+Route::group(['prefix' => 'notificaciones_app', 'middleware' => 'auth'], function () {
+	Route::get('/','NotificacionesController@index');//Carga el panel para mandar notificaciones a la aplicación.
+	Route::post('/enviar/general','NotificacionesController@enviar_notificacion_general');//Manda una notificación a todos los usuarios suscritos de la aplicación.
+	Route::post('/enviar/individual','NotificacionesController@enviar_notificacion_individual');//Manda una notificación a los usuarios seleccionados de la áplicación.
+});
+
+/*-- Rutas para la pestaña de configuración --*/
+Route::group(['prefix' => 'noticias', 'middleware' => 'auth'], function () {
+	Route::get('/','NoticiasController@index');//Carga la tabla de noticias.
+	Route::post('guardar', 'NoticiasController@guardar');//Guarda una noticia.
+	Route::post('editar', 'NoticiasController@editar');//Edita una noticia.
+	Route::post('eliminar', 'NoticiasController@eliminar');//Elimina una noticia.
+});
 
 /*-- Ruta para cargar codigo postales desde excel --*/
 Route::post('/cargar/codigo_postal','ExcelController@cargar_excel_cp');//Carga un excel con los códigos postales de jalisco
@@ -145,6 +157,7 @@ Route::group(['prefix' => 'api/v1'], function () {
 	Route::post('actualizar_direccion','dataAppController@actualizar_direccion_usuario_app');//Actualiza una dirección del usuario.
 	Route::post('listar_direcciones','dataAppController@listar_direcciones');//Muestra una lista de todas las direcciones del usuario de la aplicación.
 	Route::post('eliminar_direccion','dataAppController@eliminar_direccion_usuario_app');//Elimina una dirección del usuario de la aplicación.
+	Route::get('noticias','dataAppController@mostrar_noticias');//Regresa las noticias para mostrar en la aplicación.
 	Route::post('calificar_servicio','dataAppController@calificar_servicio');//Califica un servicio y lo marca como terminado.
 	Route::get('productos_categoria','dataAppController@productos_categoria');//Regresa todos los productos enlistados por categorias.
 	Route::get('estilistas','dataAppController@listar_estilistas');//Regresa todos los estilistas disponibles.

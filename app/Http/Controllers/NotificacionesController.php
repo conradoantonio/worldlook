@@ -15,12 +15,18 @@ class NotificacionesController  extends Controller
     function __construct() {
         date_default_timezone_set('America/Mexico_City');
         $this->summer = date('I');
-        $this->app_customer_id = "fd0924a2-30e5-4498-9e0f-76b93a4e6487";
-        $this->app_delivery_id = "4aa0dfbf-a53d-4ed8-ac09-94ef906aed6b";
-        $this->app_customer_key = "ODAwMjZlM2QtNDNhYy00YTRhLWI1YWUtMGQyOWFkMjcwNDY4";
-        $this->app_delivery_key = "NTJjN2RiOTMtYjBjMy00OGY2LWJmMjEtMzk4OTYyMzdjMmVh";
-        $this->app_customer_icon = "http://cocoinbox.bsmx.tech/public/img/icono_cliente.png";
-        $this->app_delivery_icon = "http://cocoinbox.bsmx.tech/public/img/icono_repartidor.png";
+
+        #App ID
+        $this->app_cliente_id = "b9353941-8d21-41f5-a025-691344b1e6c3";
+        $this->app_estilista_id = "9b030a7b-729e-498f-bff9-b1de8cefd352";
+
+        #Llaves
+        $this->app_cliente_key = "MGE2NDA2OGYtNjNhZi00N2VkLTllZWEtN2EyMzQ0YTg2ZWE3";
+        $this->app_estilista_key = "ODA0ZGIwY2EtMjEzNy00NDg3LWEyNDgtMGM0M2EzNDYxYTkz";
+        
+        #Íconos
+        $this->app_cliente_icon = "http://cocoinbox.bsmx.tech/public/img/icono_cliente.png";
+        $this->app_estilista_icon = "http://cocoinbox.bsmx.tech/public/img/icono_repartidor.png";
     }
     /**
      * Display a listing of the resource.
@@ -29,8 +35,8 @@ class NotificacionesController  extends Controller
      */
     public function index()
     {
-        $title = 'Notificaciones App';
-        $menu = 'Ionic';
+        $title = 'Notificaciones';
+        $menu = 'Notificaciones';
         $actual_date = date('Y-m-d');
         $clientes = Usuario::where('tipo', 1)->where('status', 1)->get();
         $repartidores = Usuario::where('tipo', 2)->where('status', 1)->get();
@@ -47,9 +53,9 @@ class NotificacionesController  extends Controller
         $titulo = $req->titulo;
         $dia = $req->fecha;
         $hora = $req->hora;
-        $app_id = $req->aplicacion == 1 ? $this->app_customer_id : $this->app_delivery_id;
-        $app_key = $req->aplicacion == 1 ? $this->app_customer_key : $this->app_delivery_key;
-        $icon = $req->aplicacion == 1 ? $this->app_customer_icon : $this->app_delivery_icon;
+        $app_id = $req->aplicacion == 1 ? $this->app_cliente_id : $this->app_estilista_id;
+        $app_key = $req->aplicacion == 1 ? $this->app_cliente_key : $this->app_estilista_key;
+        $icon = $req->aplicacion == 1 ? $this->app_cliente_icon : $this->app_estilista_icon;
         $content = array(
             "en" => $mensaje
         );
@@ -63,8 +69,8 @@ class NotificacionesController  extends Controller
             'included_segments' => array('All'),
             'data' => array("type" => "general"),
             'headings' => $header,
-            'contents' => $content,
-            'large_icon' => $icon
+            'contents' => $content/*,
+            'large_icon' => $icon*/
         );
 
         if ($dia && $hora) {
@@ -107,9 +113,9 @@ class NotificacionesController  extends Controller
         $titulo = $req->titulo;
         $dia = $req->fecha;
         $hora = $req->hora;
-        $app_id = $req->aplicacion == 1 ? $this->app_customer_id : $this->app_delivery_id;
-        $app_key = $req->aplicacion == 1 ? $this->app_customer_key : $this->app_delivery_key;
-        $icon = $req->aplicacion == 1 ? $this->app_customer_icon : $this->app_delivery_icon;
+        $app_id = $req->aplicacion == 1 ? $this->app_cliente_id : $this->app_estilista_id;
+        $app_key = $req->aplicacion == 1 ? $this->app_cliente_key : $this->app_estilista_key;
+        $icon = $req->aplicacion == 1 ? $this->app_cliente_icon : $this->app_estilista_icon;
 
         $content = array(
             "en" => $mensaje
@@ -124,8 +130,8 @@ class NotificacionesController  extends Controller
             'include_player_ids' => $player_ids,
             'data' => array('type' => 'individual'),
             'headings' => $header,
-            'contents' => $content,
-            'large_icon' => $icon
+            'contents' => $content/*,
+            'large_icon' => $icon*/
         );
 
         if ($dia && $hora) {

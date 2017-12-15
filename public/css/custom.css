@@ -38,7 +38,7 @@
 .page-sidebar .page-sidebar-wrapper > ul > li.active > a, .page-sidebar .page-sidebar-wrapper > ul > li > a{
 	color: #808285 !important;
 }
-li.active a{
+/*li.active a{
 	font-weight: 600 !important;
 	color: white !important;
-}
+}*/

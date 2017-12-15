@@ -10,6 +10,7 @@ use App\Faq;
 use App\Menu;
 use App\Cupon;
 use App\Pedidos;
+use App\Noticia;
 use App\Usuario;
 use App\Servicio;
 use App\Producto;
@@ -191,6 +192,18 @@ class dataAppController extends Controller
         }
 
         return ['msg'=>'Usuario inválido.'];
+    }
+
+    /**
+     * Regresa las noticias para mostrar en la aplicación.
+     *
+     * @return $noticias
+     */
+    public function mostrar_noticias() 
+    {
+        $noticias = Noticia::orderBy('created_at', 'DESC')->get();
+
+        return $noticias;
     }
 
     /**

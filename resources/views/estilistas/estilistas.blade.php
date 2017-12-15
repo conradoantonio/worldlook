@@ -14,6 +14,16 @@ input:-webkit-autofill {
 textarea {
     resize: none;
 }
+.table td.text {
+    max-width: 177px;
+}
+.table td.text span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 100%;
+}
 </style>
 <div class="text-center" style="margin: 20px;">
     <h2>Lista de estilistas</h2>
@@ -126,7 +136,7 @@ textarea {
                                                 <td>{{$estilista->id}}</td>
                                                 <td>{{$estilista->nombre}}</td>
                                                 <td class="hide">{{$estilista->apellido}}</td>
-                                                <td>{{$estilista->descripcion}}</td>
+                                                <td class="text"><span>{{$estilista->descripcion}}</span></td>
                                                 <td class="hide">{{$estilista->imagen}}</td>
                                                 <td><?php echo $estilista->status == '2' ? '<span class="label label-warning">Bloqueado</span>' : ($estilista->status == '1' ? '<span class="label label-success">Activo</span>' : '<span class="label label-info">Desconocido</span>')?></td>
                                                 <td>{{$estilista->correo}}</td>
@@ -172,7 +182,7 @@ $('#editar-estilista').on('hidden.bs.modal', function (e) {
 
 $('body').delegate('button#nuevo_estilista','click', function() {
     $('#editar-estilista div.form-group').removeClass('has-error');
-    $("form#form_estilistas").get(0).setAttribute('action', '<?php echo url();?>/estilistas/guardar_estilista');
+    $("form#form_estilistas").get(0).setAttribute('action', '{{ url('estilistas/guardar_estilista')}}');
     $('input.form-control').val('');
     $("h4#gridSystemModalLabel").text('Nuevo estilista');
     $("div#foto_estilista").hide();
@@ -183,7 +193,7 @@ $('body').delegate('.editar-estilista','click', function() {
     $("h4#gridSystemModalLabel").text('Editar estilista');
     $('#editar-estilista div.form-group').removeClass('has-error');
     $('input.form-control').val('');
-    $("form#form_estilistas").get(0).setAttribute('action', '<?php echo url();?>/estilistas/editar_estilista');
+    $("form#form_estilistas").get(0).setAttribute('action', '{{ url('estilistas/editar_estilista')}}');
     estilista_id = $(this).parent().siblings("td:nth-child(1)").text(),
     nombre = $(this).parent().siblings("td:nth-child(2)").text(),
     apellido = $(this).parent().siblings("td:nth-child(3)").text(),
@@ -202,7 +212,7 @@ $('body').delegate('.editar-estilista','click', function() {
 
     $('div#foto_estilista').children().children().children().remove('img#foto_estilista');
     $('div#foto_estilista').children().children().append(
-        "<img src='<?php echo asset('');?>/"+foto+"' class='img-responsive img-thumbnail' style='max-width: 200px;' alt='Responsive image' id='foto_estilista'>"
+        "<img src='{{asset('')}}/"+foto+"' class='img-responsive img-thumbnail' style='max-width: 200px;' alt='Responsive image' id='foto_estilista'>"
     );
     $("div#foto_estilista").show();
 
