@@ -287,7 +287,7 @@ $(document).ready(function() {
         "aoColumnDefs": [
             { "aTargets": [ 0 ] }
         ],
-        "aaSorting": [[ 1, "desc" ]],
+        "aaSorting": [[ 0, "desc" ]],
 				"oLanguage": {
 			"sLengthMenu": "_MENU_ ",
 			"sInfo": "Mostrando <b>_START_ a _END_</b> de _TOTAL_ registros"

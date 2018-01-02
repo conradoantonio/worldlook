@@ -17,12 +17,15 @@ class EstilistasController extends Controller
      * Muestra la tabla de los estilistas en la aplicación.
      *
      */
-    public function index()
+    public function index(Request $request)
     {
         if (auth()->check()) {
             $title = "Estilistas";
             $menu = "Estilistas";
             $estilistas = Estilista::estilistas_usuarios();
+            if ($request->ajax()) {
+                return view('estilistas.tabla', ['estilistas' => $estilistas]);
+            }
             return view('estilistas.estilistas', ['estilistas' => $estilistas, 'menu' => $menu , 'title' => $title]);
         } else {
             return redirect()->to('/');
@@ -66,19 +69,7 @@ class EstilistasController extends Controller
         $estilista->status = 1;
         $estilista->created_at = $date;
 
-        $name = "img/estilistas/default.jpg";
-        if ($request->file('foto_estilista')) {
-            $extensiones_permitidas = array("1"=>"jpeg", "2"=>"jpg", "3"=>"png", "4"=>"gif");
-            $file = Input::file('foto_estilista');
-            $extension_archivo = $file->getClientOriginalExtension();
-            if (array_search($extension_archivo, $extensiones_permitidas)) {
-                $name = 'img/estilistas/'.time().'.'.$extension_archivo;
-                $imagen_producto = Image::make($request->file('foto_estilista'))
-                ->resize(460, 460)
-                ->save($name);
-                $estilista->imagen = $name;
-            }
-        }
+        $request->file('foto_estilista') ? $estilista->imagen = $this->validar_archivo($request->file('foto_estilista'), 'img/estilistas', array('width' => 460, 'height' => 460)) : '';
    
         $estilista->save();
 
@@ -108,19 +99,7 @@ class EstilistasController extends Controller
             $estilista->apellido = $request->apellido;
             $estilista->descripcion = $request->descripcion;
 
-            $name = "img/estilistas/default.jpg";
-            if ($request->file('foto_estilista')) {
-                $extensiones_permitidas = array("1"=>"jpeg", "2"=>"jpg", "3"=>"png", "4"=>"gif");
-                $file = Input::file('foto_estilista');
-                $extension_archivo = $file->getClientOriginalExtension();
-                if (array_search($extension_archivo, $extensiones_permitidas)) {
-                    $name = 'img/estilistas/'.time().'.'.$extension_archivo;
-                    $imagen_producto = Image::make($request->file('foto_estilista'))
-                    ->resize(460, 460)
-                    ->save($name);
-                    $estilista->imagen = $name;
-                }
-            }
+            $request->file('foto_estilista') ? $estilista->imagen = $this->validar_archivo($request->file('foto_estilista'), 'img/estilistas', array('width' => 460, 'height' => 460)) : '';
 
             $estilista->save();
         }

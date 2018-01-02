@@ -21,8 +21,9 @@ btn_enviar_usuario_sistema.on('click', function() {
 
 
     if (inputs.length == 0) {
-        $('#guardar-datos-estilista').hide();
-        $('#guardar-datos-estilista').submit();
+        $(this).children('i').show();
+        $(this).attr('disabled', true);
+        guardarEstilista($(this));
     } else {
         swal("Corrija los siguientes campos para continuar: ", msgError);
         return false;
