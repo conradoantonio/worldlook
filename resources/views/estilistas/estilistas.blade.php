@@ -1,6 +1,7 @@
 @extends('admin.main')
 
 @section('content')
+<link rel="stylesheet" href="{{ asset('/css/bootstrap-select.min.css')}}" type="text/css"/>
 <link rel="stylesheet" href="{{ asset('plugins/bootstrap-select2/select2.css')}}"  type="text/css" media="screen"/>
 <link rel="stylesheet" href="{{ asset('plugins/jquery-datatable/css/jquery.dataTables.css')}}"  type="text/css" media="screen"/>
 <style>
@@ -69,6 +70,23 @@ textarea {
                                     <textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea>
                                 </div>
                             </div>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="form-group">
+                                    <label for="correo">Categorías</label>
+                                    <select class="selectpicker form-control" id="categorias_id" name="categorias_id[]" data-live-search="true"  multiple>
+                                        @foreach($categorias as $categoria)
+                                            <option value="{{$categoria->id}}">{{$categoria->categoria}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="form-group">
+                                    <label for="correo">Subcategorías</label>
+                                    <select class="selectpicker form-control" id="subcategorias_id" name="subcategorias_id[]" data-live-search="true"  multiple>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-sm-6 col-xs-12">
                                 <div class="form-group">
                                     <label for="correo">Correo</label>
@@ -129,6 +147,7 @@ textarea {
     </div>
 </div>
 
+<script type="text/javascript" src="{{asset('/js/bootstrap-select.js')}}"></script>
 <script src="{{ asset('plugins/jquery-datatable/js/jquery.dataTables.js') }}" type="text/javascript"></script>
 <script src="{{ asset('plugins/jquery-datatable/extra/js/dataTables.tableTools.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('plugins/datatables-responsive/js/datatables.responsive.js') }}" type="text/javascript"></script>
@@ -154,6 +173,8 @@ $('body').delegate('button#nuevo_estilista','click', function() {
 });
 
 $('body').delegate('.editar-estilista','click', function() {
+
+    $('select#categorias_id').selectpicker('val');
     $("h4#gridSystemModalLabel").text('Editar estilista');
     $('#editar-estilista div.form-group').removeClass('has-error');
     $('input.form-control').val('');
@@ -166,6 +187,7 @@ $('body').delegate('.editar-estilista','click', function() {
     //status = $(this).parent().siblings("td:nth-child(6)").text();
     correo = $(this).parent().siblings("td:nth-child(7)").text();
     usuario_id = $(this).parent().siblings("td:nth-child(8)").text();
+    //array_categorias = $(this).parent().siblings("td:nth-child(9)").text(),
 
     $("#form_estilistas input#id").val(estilista_id);
     $("#form_estilistas input#nombre").val(nombre);
@@ -173,6 +195,7 @@ $('body').delegate('.editar-estilista','click', function() {
     $("#form_estilistas textarea#descripcion").val(descripcion);
     $("#form_estilistas input#correo").val(correo);
     $("#form_estilistas input#usuario_id").val(usuario_id);
+    //$('#form_estilistas select#categorias_id').selectpicker('val', JSON.parse(array_categorias));
 
     $('div#foto_estilista').children().children().children().remove('img#foto_estilista');
     $('div#foto_estilista').children().children().append(
@@ -180,7 +203,10 @@ $('body').delegate('.editar-estilista','click', function() {
     );
     $("div#foto_estilista").show();
 
-    $('#editar-estilista').modal();
+    $('#editar-estilista').modal({
+            keyboard: false,
+            backdrop: 'static',
+    });
 });
 
 $('body').delegate('.eliminar-estilista, .bloquear-estilista, .reactivar-estilista','click', function() {

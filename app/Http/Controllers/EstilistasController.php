@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Image;
 use Input;
 use App\Usuario;
+use App\Categoria;
 use App\Estilista;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -22,11 +23,12 @@ class EstilistasController extends Controller
         if (auth()->check()) {
             $title = "Estilistas";
             $menu = "Estilistas";
+            $categorias = Categoria::all();
             $estilistas = Estilista::estilistas_usuarios();
             if ($request->ajax()) {
                 return view('estilistas.tabla', ['estilistas' => $estilistas]);
             }
-            return view('estilistas.estilistas', ['estilistas' => $estilistas, 'menu' => $menu , 'title' => $title]);
+            return view('estilistas.estilistas', ['estilistas' => $estilistas, 'categorias' => $categorias, 'menu' => $menu , 'title' => $title]);
         } else {
             return redirect()->to('/');
         }
