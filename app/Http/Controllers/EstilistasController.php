@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use DB;
 use Image;
 use Input;
 use App\Usuario;
 use App\Categoria;
 use App\Estilista;
+use App\Subcategoria;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -24,11 +26,13 @@ class EstilistasController extends Controller
             $title = "Estilistas";
             $menu = "Estilistas";
             $categorias = Categoria::all();
+            $subcategorias = Subcategoria::all();
+
             $estilistas = Estilista::estilistas_usuarios();
             if ($request->ajax()) {
                 return view('estilistas.tabla', ['estilistas' => $estilistas]);
             }
-            return view('estilistas.estilistas', ['estilistas' => $estilistas, 'categorias' => $categorias, 'menu' => $menu , 'title' => $title]);
+            return view('estilistas.estilistas', ['estilistas' => $estilistas, 'categorias' => $categorias, 'subcategorias' => $subcategorias, 'menu' => $menu , 'title' => $title]);
         } else {
             return redirect()->to('/');
         }
@@ -42,7 +46,7 @@ class EstilistasController extends Controller
      */
     public function guardar_estilista(Request $request)
     {
-        if(count(Usuario::buscar_usuario_por_correo($request->correo))) {
+        if (count(Usuario::buscar_usuario_por_correo($request->correo))) {
             return redirect()->action('EstilistasController@index', ['valido' => md5('false')]);
         }
 

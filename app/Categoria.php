@@ -18,7 +18,5 @@ class Categoria extends Model
      *
      * @var array
      */
-    protected $fillable = ['categoria', 'precio_cortes', 'precio_peinados', 'precio_piojos', 'tiempo_a', 
-        'tiempo_minimo_cortes', 'tiempo_maximo_cortes', 'tiempo_minimo_peinados', 'tiempo_maximo_peinados', 
-        'tiempo_minimo_piojos', 'tiempo_maximo_piojos', 'created_at'];
+    protected $fillable = ['categoria', 'foto', 'created_at'];
 }

@@ -70,20 +70,19 @@ textarea {
                                     <textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-xs-12">
-                                <div class="form-group">
-                                    <label for="correo">Categorías</label>
-                                    <select class="selectpicker form-control" id="categorias_id" name="categorias_id[]" data-live-search="true"  multiple>
-                                        @foreach($categorias as $categoria)
-                                            <option value="{{$categoria->id}}">{{$categoria->categoria}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-xs-12">
+                            <div class="col-md-12 col-xs-12">
                                 <div class="form-group">
                                     <label for="correo">Subcategorías</label>
-                                    <select class="selectpicker form-control" id="subcategorias_id" name="subcategorias_id[]" data-live-search="true"  multiple>
+                                    <select class="selectpicker form-control" id="subcategorias_id" name="subcategorias_id[]" data-live-search="true" multiple>
+                                        @foreach($categorias as $categoria)
+                                            <optgroup label="{{$categoria->categoria}}" data-max-options="2">
+                                                @foreach($subcategorias as $subcategoria)
+                                                    @if($subcategoria->categoria_id == $categoria->id)
+                                                        <option value="{{$subcategoria->id}}">{{$subcategoria->subcategoria}}</option>
+                                                    @endif
+                                                @endforeach
+                                            </optgroup>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -156,6 +155,10 @@ textarea {
 <script src="{{ asset('js/validacionesEstilistas.js') }}"></script>
 <script src="{{ asset('js/estilistasAjax.js') }}"></script>
 <script>
+$(function(){
+    subcat = <?php echo $subcategorias;?>;
+    console.log(subcat);
+});
 /*Código para cuando se ocultan los modal*/
 $('#editar-estilista').on('hidden.bs.modal', function (e) {
     $('#editar-estilista div.form-group').removeClass('has-error');
@@ -174,7 +177,7 @@ $('body').delegate('button#nuevo_estilista','click', function() {
 
 $('body').delegate('.editar-estilista','click', function() {
 
-    $('select#categorias_id').selectpicker('val');
+    $('select#subcategorias_id').selectpicker('val');
     $("h4#gridSystemModalLabel").text('Editar estilista');
     $('#editar-estilista div.form-group').removeClass('has-error');
     $('input.form-control').val('');
@@ -204,8 +207,8 @@ $('body').delegate('.editar-estilista','click', function() {
     $("div#foto_estilista").show();
 
     $('#editar-estilista').modal({
-            keyboard: false,
-            backdrop: 'static',
+        keyboard: false,
+        backdrop: 'static',
     });
 });
 
